@@ -6,12 +6,22 @@ var direction = Vector2(1.5,0)
 var wobble = 30.0
 
 
+
+func _on_Area2D_body_exited(body):
+	if body.name == "Player":
+		body.damage(100)
+		damage(100)
+
+
+
+
+
+
 var health = 1
 
 var Effects = null
 onready var Bullet = load("res://Enemy/Bullet.tscn")
 onready var Explosion = load("res://Effects/Explosion.tscn")
-
 func _ready():
 	initial_position.x = -100
 	initial_position.y = y_positions[randi() % y_positions.size()]
@@ -22,6 +32,7 @@ func _physics_process(_delta):
 	position.y = initial_position.y + sin(position.x/20)*wobble
 	if position.x >= Global.VP.x + 200:
 		queue_free()
+
 
 func damage(d):
 	health -= d
@@ -35,10 +46,7 @@ func damage(d):
 		queue_free()
 
 
-func _on_Area2D_body_exited(body):
-	if body.name == "Player":
-		body.damage(100)
-		damage(100)
+
 
 
 func _on_Timer_timeout():

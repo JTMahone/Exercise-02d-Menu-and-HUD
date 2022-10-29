@@ -10,8 +10,13 @@ var health = 1
 var Effects = null
 onready var Explosion = load("res://Effects/Explosion.tscn")
 
+
+
+
 onready var Bullet = load("res://Player/Bullet.tscn")
 var nose = Vector2(0,-60)
+
+
 
 
 
@@ -33,6 +38,10 @@ func _physics_process(_delta):
 			bullet.rotation = rotation
 			Effects.add_child(bullet)
 
+
+func _on_Area2D_body_entered(body):
+	if body.name != "Player":
+		damage(100)
 
 
 func get_input():
@@ -59,8 +68,3 @@ func damage(d):
 			hide()
 			yield(explosion, "animation_finished")
 		queue_free()
-
-
-func _on_Area2D_body_entered(body):
-	if body.name != "Player":
-		damage(100)
